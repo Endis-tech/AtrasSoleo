@@ -1,14 +1,24 @@
 {
   "version": 2,
+  "builds": [
+    {
+      "src": "api/index.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["src/**", "public/**"]
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "api/index.js"
+    }
+  ],
   "functions": {
     "api/index.js": {
-      "runtime": "@vercel/node@2.0.0",
-      "memory": 1024,
-      "maxDuration": 10
+      "maxDuration": 30,
+      "memory": 1024
     }
-  },
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/index.js" },
-    { "src": "/", "dest": "/api/index.js" }
-  ]
+  }
 }

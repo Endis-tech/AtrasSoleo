@@ -3,11 +3,21 @@
   "version": "1.0.0",
   "type": "module",
   "description": "",
+  
+
+
   "scripts": {
     "dev": "nodemon src/server-local.js",
-    "seed:membership": "node seed/membership.seed.js",
-    "start": "node src/server-local.js"
-  },
+    "start": "node src/server-local.js",
+    "vercel-build": "npm install && npm run build",
+    "build": "echo 'No build step required'"
+  
+},
+
+
+
+
+
   "engines": {
     "node": ">=20"
   },
