@@ -2,7 +2,6 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
-import taskRoutes from "./routes/task.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import membershipRoutes from "./routes/membership.routes.js";
 import userRoutes from "./routes/user.routes.js";
@@ -46,7 +45,6 @@ app.use(async (_req, _res, next) => {
 });
 
 app.get("/", (_req, res) => res.json({ ok: true, name: "soleo-pwa-api" }));
-app.use("/api/tasks", taskRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/memberships", membershipRoutes);
 app.use("/api/users", userRoutes);

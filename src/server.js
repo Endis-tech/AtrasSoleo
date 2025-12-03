@@ -6,7 +6,6 @@ import cors from 'cors';
 
 
 // importar rutas
-import taskRoutes from './routes/task.routes.js';
 import authRoutes from './routes/auth.routes.js';
 import membershipRoutes from "./routes/membership.routes.js";
 import userRoutes from "./routes/user.routes.js";
@@ -24,7 +23,6 @@ app.use(morgan('dev'));
 app.get('/', (req, res) => res.json({ok: true, name:'soleo-pwa-api'}));
 
 // ✅ MONTA LAS RUTAS DE TASKS (FALTABA ESTA LÍNEA)
-app.use('/api/tasks', taskRoutes);
 app.use('/api/auth', authRoutes);
 app.use("/api/memberships", membershipRoutes);
 app.use("/api/users", userRoutes);
