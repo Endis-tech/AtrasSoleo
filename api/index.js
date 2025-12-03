@@ -1,8 +1,13 @@
 // api/index.js
 import "dotenv/config";
-import app from "../src/app.js";
+import express from "express";
 
-// Agrega una ruta de prueba simple
+const app = express();
+
+app.get("/", (req, res) => {
+  res.json({ message: "Hello from Vercel" });
+});
+
 app.get("/test", (req, res) => {
   res.json({ message: "Test route" });
 });
