@@ -1,44 +1,10 @@
-// api/index.js - VERSIÓN CON DEBUGGING
-console.log("🚀 Iniciando función en Vercel...");
+// api/index.js
+import app from '../src/app.js';
 
-try {
-  // Intenta cargar dotenv primero
-  import('dotenv/config').then(() => {
-    console.log("✅ dotenv cargado");
-  }).catch(err => {
-    console.log("⚠️  dotenv no cargado:", err.message);
-  });
+export default async function handler(req, res) {
+  // Para debugging, puedes agregar logs
+  console.log(`${req.method} ${req.url}`);
   
-  // Importa la app de Express
-  import('../src/app.js').then((module) => {
-    const app = module.default;
-    console.log("✅ Express app importada correctamente");
-    
-    // Exporta la función handler
-    export default function handler(req, res) {
-      console.log(`📥 Request recibido: ${req.method} ${req.url}`);
-      return app(req, res);
-    };
-  }).catch((error) => {
-    console.error("❌ ERROR al importar app.js:", error);
-    
-    // Exporta un handler de emergencia
-    export default function handler(req, res) {
-      console.error("❌ App no disponible");
-      res.status(500).json({
-        error: "Server initialization failed",
-        message: error.message,
-        stack: process.env.NODE_ENV === 'production' ? undefined : error.stack
-      });
-    };
-  });
-} catch (error) {
-  console.error("❌ ERROR FATAL en api/index.js:", error);
-  
-  export default function handler(req, res) {
-    res.status(500).json({
-      error: "Fatal server error",
-      message: error.message
-    });
-  };
+  // Pasar la solicitud a Express
+  return app(req, res);
 }

@@ -1,37 +1,39 @@
-// src/db/connect.js - Asegúrate de no tener código inmediato
-import mongoose from "mongoose";
+// src/db/connect.js
+import mongoose from 'mongoose';
 
-let isConnected = false;
+const MONGODB_URI = process.env.MONGO_URI;
+
+if (!MONGODB_URI) {
+  throw new Error('Por favor define la variable de entorno MONGO_URI');
+}
+
+let cached = global.mongoose;
+
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
 
 export const connectToDB = async () => {
-  console.log("🔗 connectToDB llamado");
-  
-  if (isConnected) {
-    console.log("✅ Usando conexión existente a MongoDB");
-    return;
+  if (cached.conn) {
+    return cached.conn;
+  }
+
+  if (!cached.promise) {
+    const opts = {
+      bufferCommands: false,
+    };
+
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+      return mongoose;
+    });
   }
 
   try {
-    console.log("📡 MONGO_URI disponible:", !!process.env.MONGO_URI);
-    
-    if (!process.env.MONGO_URI) {
-      throw new Error("MONGO_URI no está definida");
-    }
-
-    const options = {
-      serverSelectionTimeoutMS: 5000,
-      socketTimeoutMS: 45000,
-    };
-
-    await mongoose.connect(process.env.MONGO_URI, options);
-    isConnected = true;
-    console.log("✅ MongoDB conectado exitosamente");
-    
-  } catch (error) {
-    console.error("❌ Error conectando a MongoDB:", error.message);
-    isConnected = false;
-    throw error;
+    cached.conn = await cached.promise;
+  } catch (e) {
+    cached.promise = null;
+    throw e;
   }
-};
 
-// NO exportes nada que se ejecute inmediatamente aquí
+  return cached.conn;
+};

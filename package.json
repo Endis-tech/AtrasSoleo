@@ -6,13 +6,13 @@
   
 
 
+
   "scripts": {
     "dev": "nodemon src/server-local.js",
     "start": "node src/server-local.js",
-    "vercel-build": "npm install && npm run build",
-    "build": "echo 'No build step required'"
-  
-},
+    "vercel-build": "npm install"
+  },
+
 
 
 
