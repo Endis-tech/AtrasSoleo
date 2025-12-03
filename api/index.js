@@ -2,4 +2,9 @@
 import "dotenv/config";
 import app from "../src/app.js";
 
-export default app; // Express como handler para Vercel
+// Agrega una ruta de prueba simple
+app.get("/test", (req, res) => {
+  res.json({ message: "Test route" });
+});
+
+export default app;

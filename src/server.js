@@ -22,7 +22,7 @@ app.use(morgan('dev'));
 
 app.get('/', (req, res) => res.json({ok: true, name:'soleo-pwa-api'}));
 
-// ✅ MONTA LAS RUTAS DE TASKS (FALTABA ESTA LÍNEA)
+
 app.use('/api/auth', authRoutes);
 app.use("/api/memberships", membershipRoutes);
 app.use("/api/users", userRoutes);
